@@ -101,6 +101,7 @@ $(function(){initNavTree('d8/d52/dynamic__map__spellbook_8h.html','../../',''); 
 Macros</h2></td></tr>
 <tr class="memitem:a8e509a128daed5ab883a415b4c8b086f" id="r_a8e509a128daed5ab883a415b4c8b086f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e509a128daed5ab883a415b4c8b086f">dynmaps_init</a>(dynamic_map)</td></tr>
 <tr class="memitem:a9040b9f6aebaa24f715442cb42839b88" id="r_a9040b9f6aebaa24f715442cb42839b88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9040b9f6aebaa24f715442cb42839b88">dynmaps_free</a>(dynamic_map)</td></tr>
+<tr class="memitem:a7b7042e9995eba9978b96c967ab5a108" id="r_a7b7042e9995eba9978b96c967ab5a108"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b7042e9995eba9978b96c967ab5a108">dynmaps_free_strkey</a>(dynamic_map)</td></tr>
 <tr class="memitem:aa2b915c5d44f95738b497fe05fd86bcb" id="r_aa2b915c5d44f95738b497fe05fd86bcb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2b915c5d44f95738b497fe05fd86bcb">dynmaps_get</a>(dynamic_map,  key,  value)</td></tr>
 <tr class="memitem:a7f03364c477238fdc5cc5b7e575cc751" id="r_a7f03364c477238fdc5cc5b7e575cc751"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f03364c477238fdc5cc5b7e575cc751">dynmaps_get_strkey</a>(dynamic_map,  key,  value)</td></tr>
 <tr class="memitem:a0cdfdcf942eb8a19a5d0ec84cf037897" id="r_a0cdfdcf942eb8a19a5d0ec84cf037897"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0cdfdcf942eb8a19a5d0ec84cf037897">dynmaps_expand</a>(dynamic_map)</td></tr>
@@ -141,16 +142,16 @@ Macros</h2></td></tr>
 </div><!-- fragment --><p>Clears the given dynamic map. Clearing a map results in its size being 0.</p>
 <dl class="section note"><dt>Note</dt><dd>This macro expects a pointer to the dynamic map. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00330">330</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  330</span><span class="preprocessor">#define dynmaps_clear(dynamic_map) \</span></div>
-<div class="line"><span class="lineno">  331</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">  332</span><span class="preprocessor">        for(size_t i = 0; i &lt; (dynamic_map) -&gt; size; ++i) \</span></div>
-<div class="line"><span class="lineno">  333</span><span class="preprocessor">        { \</span></div>
-<div class="line"><span class="lineno">  334</span><span class="preprocessor">            (dynamic_map) -&gt; keys[i] = 0; \</span></div>
-<div class="line"><span class="lineno">  335</span><span class="preprocessor">            (dynamic_map) -&gt; values[i] = 0; \</span></div>
-<div class="line"><span class="lineno">  336</span><span class="preprocessor">        } \</span></div>
-<div class="line"><span class="lineno">  337</span><span class="preprocessor">        (dynamic_map) -&gt; size = 0; \</span></div>
-<div class="line"><span class="lineno">  338</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00351">351</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  351</span><span class="preprocessor">#define dynmaps_clear(dynamic_map) \</span></div>
+<div class="line"><span class="lineno">  352</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">  353</span><span class="preprocessor">        for(size_t i = 0; i &lt; (dynamic_map) -&gt; size; ++i) \</span></div>
+<div class="line"><span class="lineno">  354</span><span class="preprocessor">        { \</span></div>
+<div class="line"><span class="lineno">  355</span><span class="preprocessor">            (dynamic_map) -&gt; keys[i] = 0; \</span></div>
+<div class="line"><span class="lineno">  356</span><span class="preprocessor">            (dynamic_map) -&gt; values[i] = 0; \</span></div>
+<div class="line"><span class="lineno">  357</span><span class="preprocessor">        } \</span></div>
+<div class="line"><span class="lineno">  358</span><span class="preprocessor">        (dynamic_map) -&gt; size = 0; \</span></div>
+<div class="line"><span class="lineno">  359</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -182,19 +183,19 @@ Macros</h2></td></tr>
 </div><!-- fragment --><p>This macro determines the given dynamic map needs to expand, and it will automatically expand the map is necessary.</p>
 <dl class="section note"><dt>Note</dt><dd>This macro expects a pointer to the dynamic map. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00116">116</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  116</span><span class="preprocessor">#define dynmaps_expand(dynamic_map) \</span></div>
-<div class="line"><span class="lineno">  117</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">  118</span><span class="preprocessor">        if((dynamic_map) -&gt; size &gt;= (dynamic_map) -&gt; capacity) \</span></div>
-<div class="line"><span class="lineno">  119</span><span class="preprocessor">        { \</span></div>
-<div class="line"><span class="lineno">  120</span><span class="preprocessor">            if((dynamic_map) -&gt; capacity * 2 &lt;= SIZE_MAX) \</span></div>
-<div class="line"><span class="lineno">  121</span><span class="preprocessor">            { \</span></div>
-<div class="line"><span class="lineno">  122</span><span class="preprocessor">                (dynamic_map) -&gt; capacity *= 2; \</span></div>
-<div class="line"><span class="lineno">  123</span><span class="preprocessor">                (dynamic_map) -&gt; keys = realloc((dynamic_map) -&gt; keys, (dynamic_map) -&gt; capacity * sizeof(*(dynamic_map) -&gt; keys)); \</span></div>
-<div class="line"><span class="lineno">  124</span><span class="preprocessor">                (dynamic_map) -&gt; values = realloc((dynamic_map) -&gt; values, (dynamic_map) -&gt; capacity * sizeof(*(dynamic_map) -&gt; values)); \</span></div>
-<div class="line"><span class="lineno">  125</span><span class="preprocessor">            } \</span></div>
-<div class="line"><span class="lineno">  126</span><span class="preprocessor">        } \</span></div>
-<div class="line"><span class="lineno">  127</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00137">137</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  137</span><span class="preprocessor">#define dynmaps_expand(dynamic_map) \</span></div>
+<div class="line"><span class="lineno">  138</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">  139</span><span class="preprocessor">        if((dynamic_map) -&gt; size &gt;= (dynamic_map) -&gt; capacity) \</span></div>
+<div class="line"><span class="lineno">  140</span><span class="preprocessor">        { \</span></div>
+<div class="line"><span class="lineno">  141</span><span class="preprocessor">            if((dynamic_map) -&gt; capacity * 2 &lt;= SIZE_MAX) \</span></div>
+<div class="line"><span class="lineno">  142</span><span class="preprocessor">            { \</span></div>
+<div class="line"><span class="lineno">  143</span><span class="preprocessor">                (dynamic_map) -&gt; capacity *= 2; \</span></div>
+<div class="line"><span class="lineno">  144</span><span class="preprocessor">                (dynamic_map) -&gt; keys = realloc((dynamic_map) -&gt; keys, (dynamic_map) -&gt; capacity * sizeof(*(dynamic_map) -&gt; keys)); \</span></div>
+<div class="line"><span class="lineno">  145</span><span class="preprocessor">                (dynamic_map) -&gt; values = realloc((dynamic_map) -&gt; values, (dynamic_map) -&gt; capacity * sizeof(*(dynamic_map) -&gt; values)); \</span></div>
+<div class="line"><span class="lineno">  146</span><span class="preprocessor">            } \</span></div>
+<div class="line"><span class="lineno">  147</span><span class="preprocessor">        } \</span></div>
+<div class="line"><span class="lineno">  148</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -237,19 +238,19 @@ Macros</h2></td></tr>
 <dd>
 The 3rd argument should be a signed integer value indicating whether or not the key was found in the map. If 'result' is -1, the key was not found. If 'result' is not -1, it is equal to the index the key was found at in the map. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00216">216</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  216</span><span class="preprocessor">#define dynmaps_find_entry(dynamic_map, key, result) \</span></div>
-<div class="line"><span class="lineno">  217</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">  218</span><span class="preprocessor">        (result) = -1; \</span></div>
-<div class="line"><span class="lineno">  219</span><span class="preprocessor">        for(size_t i = 0; i &lt; (dynamic_map) -&gt; size; ++i) \</span></div>
-<div class="line"><span class="lineno">  220</span><span class="preprocessor">        { \</span></div>
-<div class="line"><span class="lineno">  221</span><span class="preprocessor">            if((dynamic_map) -&gt; keys[i] == (key)) \</span></div>
-<div class="line"><span class="lineno">  222</span><span class="preprocessor">            { \</span></div>
-<div class="line"><span class="lineno">  223</span><span class="preprocessor">                (result) = i; \</span></div>
-<div class="line"><span class="lineno">  224</span><span class="preprocessor">                break; \</span></div>
-<div class="line"><span class="lineno">  225</span><span class="preprocessor">            } \</span></div>
-<div class="line"><span class="lineno">  226</span><span class="preprocessor">        } \</span></div>
-<div class="line"><span class="lineno">  227</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00237">237</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  237</span><span class="preprocessor">#define dynmaps_find_entry(dynamic_map, key, result) \</span></div>
+<div class="line"><span class="lineno">  238</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">  239</span><span class="preprocessor">        (result) = -1; \</span></div>
+<div class="line"><span class="lineno">  240</span><span class="preprocessor">        for(size_t i = 0; i &lt; (dynamic_map) -&gt; size; ++i) \</span></div>
+<div class="line"><span class="lineno">  241</span><span class="preprocessor">        { \</span></div>
+<div class="line"><span class="lineno">  242</span><span class="preprocessor">            if((dynamic_map) -&gt; keys[i] == (key)) \</span></div>
+<div class="line"><span class="lineno">  243</span><span class="preprocessor">            { \</span></div>
+<div class="line"><span class="lineno">  244</span><span class="preprocessor">                (result) = i; \</span></div>
+<div class="line"><span class="lineno">  245</span><span class="preprocessor">                break; \</span></div>
+<div class="line"><span class="lineno">  246</span><span class="preprocessor">            } \</span></div>
+<div class="line"><span class="lineno">  247</span><span class="preprocessor">        } \</span></div>
+<div class="line"><span class="lineno">  248</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -292,19 +293,19 @@ The 3rd argument should be a signed integer value indicating whether or not the 
 <dd>
 The 3rd argument should be a signed integer value indicating whether or not the key was found in the map. If 'result' is -1, the key was not found. If 'result' is not -1, it is equal to the index the key was found at in the map. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00239">239</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  239</span><span class="preprocessor">#define dynmaps_find_entry_strkey(dynamic_map, key, result) \</span></div>
-<div class="line"><span class="lineno">  240</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">  241</span><span class="preprocessor">        (result) = -1; \</span></div>
-<div class="line"><span class="lineno">  242</span><span class="preprocessor">        for(size_t i = 0; i &lt; (dynamic_map) -&gt; size; ++i) \</span></div>
-<div class="line"><span class="lineno">  243</span><span class="preprocessor">        { \</span></div>
-<div class="line"><span class="lineno">  244</span><span class="preprocessor">            if(strcmp((dynamic_map) -&gt; keys[i], (key)) == 0)\</span></div>
-<div class="line"><span class="lineno">  245</span><span class="preprocessor">            { \</span></div>
-<div class="line"><span class="lineno">  246</span><span class="preprocessor">                (result) = i; \</span></div>
-<div class="line"><span class="lineno">  247</span><span class="preprocessor">                break; \</span></div>
-<div class="line"><span class="lineno">  248</span><span class="preprocessor">            } \</span></div>
-<div class="line"><span class="lineno">  249</span><span class="preprocessor">        } \</span></div>
-<div class="line"><span class="lineno">  250</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00260">260</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  260</span><span class="preprocessor">#define dynmaps_find_entry_strkey(dynamic_map, key, result) \</span></div>
+<div class="line"><span class="lineno">  261</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">  262</span><span class="preprocessor">        (result) = -1; \</span></div>
+<div class="line"><span class="lineno">  263</span><span class="preprocessor">        for(size_t i = 0; i &lt; (dynamic_map) -&gt; size; ++i) \</span></div>
+<div class="line"><span class="lineno">  264</span><span class="preprocessor">        { \</span></div>
+<div class="line"><span class="lineno">  265</span><span class="preprocessor">            if(strcmp((dynamic_map) -&gt; keys[i], (key)) == 0)\</span></div>
+<div class="line"><span class="lineno">  266</span><span class="preprocessor">            { \</span></div>
+<div class="line"><span class="lineno">  267</span><span class="preprocessor">                (result) = i; \</span></div>
+<div class="line"><span class="lineno">  268</span><span class="preprocessor">                break; \</span></div>
+<div class="line"><span class="lineno">  269</span><span class="preprocessor">            } \</span></div>
+<div class="line"><span class="lineno">  270</span><span class="preprocessor">        } \</span></div>
+<div class="line"><span class="lineno">  271</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -343,6 +344,50 @@ The 3rd argument should be a signed integer value indicating whether or not the 
 <div class="line"><span class="lineno">   44</span><span class="preprocessor">        (dynamic_map) -&gt; keys = NULL; \</span></div>
 <div class="line"><span class="lineno">   45</span><span class="preprocessor">        (dynamic_map) -&gt; values = NULL; \</span></div>
 <div class="line"><span class="lineno">   46</span><span class="preprocessor">    } while(0)</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7b7042e9995eba9978b96c967ab5a108" name="a7b7042e9995eba9978b96c967ab5a108"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b7042e9995eba9978b96c967ab5a108">&#9670;&#160;</a></span>dynmaps_free_strkey</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define dynmaps_free_strkey</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>dynamic_map</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">do</span> { \</div>
+<div class="line">        for(<span class="keywordtype">size_t</span> i = 0; i &lt; (dynamic_map) -&gt; size; ++i) \</div>
+<div class="line">            free((dynamic_map) -&gt; keys[i]); \</div>
+<div class="line">        (dynamic_map) -&gt; size = 0; \</div>
+<div class="line">        (dynamic_map) -&gt; capacity = 10; \</div>
+<div class="line">        free((dynamic_map) -&gt; keys); \</div>
+<div class="line">        free((dynamic_map) -&gt; values); \</div>
+<div class="line">        (dynamic_map) -&gt; keys = NULL; \</div>
+<div class="line">        (dynamic_map) -&gt; values = NULL; \</div>
+<div class="line">    } <span class="keywordflow">while</span>(0)</div>
+</div><!-- fragment --><p>Frees a dynamic map's memory.</p>
+<dl class="section note"><dt>Note</dt><dd>This macro is targeted towards dynamic maps that use string keys. This is because string-keyed dynamic maps allocate memory to duplicate strings.</dd>
+<dd>
+This macro expects a pointer to the dynamic map. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00057">57</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   57</span><span class="preprocessor">#define dynmaps_free_strkey(dynamic_map) \</span></div>
+<div class="line"><span class="lineno">   58</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">   59</span><span class="preprocessor">        for(size_t i = 0; i &lt; (dynamic_map) -&gt; size; ++i) \</span></div>
+<div class="line"><span class="lineno">   60</span><span class="preprocessor">            free((dynamic_map) -&gt; keys[i]); \</span></div>
+<div class="line"><span class="lineno">   61</span><span class="preprocessor">        (dynamic_map) -&gt; size = 0; \</span></div>
+<div class="line"><span class="lineno">   62</span><span class="preprocessor">        (dynamic_map) -&gt; capacity = 10; \</span></div>
+<div class="line"><span class="lineno">   63</span><span class="preprocessor">        free((dynamic_map) -&gt; keys); \</span></div>
+<div class="line"><span class="lineno">   64</span><span class="preprocessor">        free((dynamic_map) -&gt; values); \</span></div>
+<div class="line"><span class="lineno">   65</span><span class="preprocessor">        (dynamic_map) -&gt; keys = NULL; \</span></div>
+<div class="line"><span class="lineno">   66</span><span class="preprocessor">        (dynamic_map) -&gt; values = NULL; \</span></div>
+<div class="line"><span class="lineno">   67</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -385,19 +430,19 @@ The 3rd argument should be a signed integer value indicating whether or not the 
 <dl class="section important"><dt>Important</dt><dd>This macro compares each key in the map to the key given using the '=' operator, meaning if the map's keys are strings, this macro will not function properly. If using string keys, use <a class="el" href="#a7f03364c477238fdc5cc5b7e575cc751">dynmaps_get_strkey(...)</a> instead.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The 3rd argument should a pointer of the same type as the values in the map. This macro sets it to NULL when the key is not found in the map, and it points to the matching value if the key is found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00066">66</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   66</span><span class="preprocessor">#define dynmaps_get(dynamic_map, key, value) \</span></div>
-<div class="line"><span class="lineno">   67</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">   68</span><span class="preprocessor">        (value) = NULL; \</span></div>
-<div class="line"><span class="lineno">   69</span><span class="preprocessor">        for(size_t i = 0; i &lt; (dynamic_map) -&gt; size; ++i) \</span></div>
-<div class="line"><span class="lineno">   70</span><span class="preprocessor">        { \</span></div>
-<div class="line"><span class="lineno">   71</span><span class="preprocessor">            if((dynamic_map) -&gt; keys[i] == (key)) \</span></div>
-<div class="line"><span class="lineno">   72</span><span class="preprocessor">            { \</span></div>
-<div class="line"><span class="lineno">   73</span><span class="preprocessor">                (value) = &amp;(dynamic_map) -&gt; values[i]; \</span></div>
-<div class="line"><span class="lineno">   74</span><span class="preprocessor">                break; \</span></div>
-<div class="line"><span class="lineno">   75</span><span class="preprocessor">            } \</span></div>
-<div class="line"><span class="lineno">   76</span><span class="preprocessor">        } \</span></div>
-<div class="line"><span class="lineno">   77</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00087">87</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   87</span><span class="preprocessor">#define dynmaps_get(dynamic_map, key, value) \</span></div>
+<div class="line"><span class="lineno">   88</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">   89</span><span class="preprocessor">        (value) = NULL; \</span></div>
+<div class="line"><span class="lineno">   90</span><span class="preprocessor">        for(size_t i = 0; i &lt; (dynamic_map) -&gt; size; ++i) \</span></div>
+<div class="line"><span class="lineno">   91</span><span class="preprocessor">        { \</span></div>
+<div class="line"><span class="lineno">   92</span><span class="preprocessor">            if((dynamic_map) -&gt; keys[i] == (key)) \</span></div>
+<div class="line"><span class="lineno">   93</span><span class="preprocessor">            { \</span></div>
+<div class="line"><span class="lineno">   94</span><span class="preprocessor">                (value) = &amp;(dynamic_map) -&gt; values[i]; \</span></div>
+<div class="line"><span class="lineno">   95</span><span class="preprocessor">                break; \</span></div>
+<div class="line"><span class="lineno">   96</span><span class="preprocessor">            } \</span></div>
+<div class="line"><span class="lineno">   97</span><span class="preprocessor">        } \</span></div>
+<div class="line"><span class="lineno">   98</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -440,19 +485,19 @@ The 3rd argument should be a signed integer value indicating whether or not the 
 <dl class="section important"><dt>Important</dt><dd>This macro is used specifically when the map's keys are strings. This is because the macro will compare each string character-by-character.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The 3rd argument should be a pointer of the same type as the values in the map. This macro sets it to NULL when the key is not found in the map, and it points to the matching value if the key is found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00096">96</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   96</span><span class="preprocessor">#define dynmaps_get_strkey(dynamic_map, key, value) \</span></div>
-<div class="line"><span class="lineno">   97</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">   98</span><span class="preprocessor">        (value) = NULL; \</span></div>
-<div class="line"><span class="lineno">   99</span><span class="preprocessor">        for(size_t i = 0; i &lt; (dynamic_map) -&gt; size; ++i) \</span></div>
-<div class="line"><span class="lineno">  100</span><span class="preprocessor">        { \</span></div>
-<div class="line"><span class="lineno">  101</span><span class="preprocessor">            if(strcmp((dynamic_map) -&gt; keys[i], (key)) == 0) \</span></div>
-<div class="line"><span class="lineno">  102</span><span class="preprocessor">            { \</span></div>
-<div class="line"><span class="lineno">  103</span><span class="preprocessor">                (value) = &amp;(dynamic_map) -&gt; values[i]; \</span></div>
-<div class="line"><span class="lineno">  104</span><span class="preprocessor">                break; \</span></div>
-<div class="line"><span class="lineno">  105</span><span class="preprocessor">            } \</span></div>
-<div class="line"><span class="lineno">  106</span><span class="preprocessor">        } \</span></div>
-<div class="line"><span class="lineno">  107</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00117">117</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  117</span><span class="preprocessor">#define dynmaps_get_strkey(dynamic_map, key, value) \</span></div>
+<div class="line"><span class="lineno">  118</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">  119</span><span class="preprocessor">        (value) = NULL; \</span></div>
+<div class="line"><span class="lineno">  120</span><span class="preprocessor">        for(size_t i = 0; i &lt; (dynamic_map) -&gt; size; ++i) \</span></div>
+<div class="line"><span class="lineno">  121</span><span class="preprocessor">        { \</span></div>
+<div class="line"><span class="lineno">  122</span><span class="preprocessor">            if(strcmp((dynamic_map) -&gt; keys[i], (key)) == 0) \</span></div>
+<div class="line"><span class="lineno">  123</span><span class="preprocessor">            { \</span></div>
+<div class="line"><span class="lineno">  124</span><span class="preprocessor">                (value) = &amp;(dynamic_map) -&gt; values[i]; \</span></div>
+<div class="line"><span class="lineno">  125</span><span class="preprocessor">                break; \</span></div>
+<div class="line"><span class="lineno">  126</span><span class="preprocessor">            } \</span></div>
+<div class="line"><span class="lineno">  127</span><span class="preprocessor">        } \</span></div>
+<div class="line"><span class="lineno">  128</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -524,12 +569,12 @@ The 3rd argument should be a signed integer value indicating whether or not the 
 </div><!-- fragment --><p>Removes an entry from a map based on a specific key. For maps that use string keys, use <a class="el" href="#a016d601bd00e05f5cc5dc5f2236b3c1a">dynmaps_remove_strkey(...)</a> instead.</p>
 <dl class="section note"><dt>Note</dt><dd>This macro expects a pointer to the dynamic map. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00284">284</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  284</span><span class="preprocessor">#define dynmaps_remove(dynamic_map, key) \</span></div>
-<div class="line"><span class="lineno">  285</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">  286</span><span class="preprocessor">        int dynmaps_entry_idx = -1; \</span></div>
-<div class="line"><span class="lineno">  287</span><span class="preprocessor">        dynmaps_remove_result(dynamic_map, key, dynmaps_entry_idx); \</span></div>
-<div class="line"><span class="lineno">  288</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00305">305</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  305</span><span class="preprocessor">#define dynmaps_remove(dynamic_map, key) \</span></div>
+<div class="line"><span class="lineno">  306</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">  307</span><span class="preprocessor">        int dynmaps_entry_idx = -1; \</span></div>
+<div class="line"><span class="lineno">  308</span><span class="preprocessor">        dynmaps_remove_result(dynamic_map, key, dynmaps_entry_idx); \</span></div>
+<div class="line"><span class="lineno">  309</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -561,13 +606,13 @@ The 3rd argument should be a signed integer value indicating whether or not the 
 <dd>
 This macro does not validate the size of the map or the index given, so make sure the index is valid for the given map, otherwise undefined behavior may occur. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00196">196</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  196</span><span class="preprocessor">#define dynmaps_remove_at(dynamic_map, idx) \</span></div>
-<div class="line"><span class="lineno">  197</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">  198</span><span class="preprocessor">        memmove((dynamic_map) -&gt; keys + (idx), (dynamic_map) -&gt; keys + (idx) + 1, ((dynamic_map) -&gt; size - (idx) - 1) * sizeof(*(dynamic_map) -&gt; keys)); \</span></div>
-<div class="line"><span class="lineno">  199</span><span class="preprocessor">        memmove((dynamic_map) -&gt; values + (idx), (dynamic_map) -&gt; values + (idx) + 1, ((dynamic_map) -&gt; size - (idx) - 1) * sizeof(*(dynamic_map) -&gt; values)); \</span></div>
-<div class="line"><span class="lineno">  200</span><span class="preprocessor">        (dynamic_map) -&gt; size--; \</span></div>
-<div class="line"><span class="lineno">  201</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00217">217</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  217</span><span class="preprocessor">#define dynmaps_remove_at(dynamic_map, idx) \</span></div>
+<div class="line"><span class="lineno">  218</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">  219</span><span class="preprocessor">        memmove((dynamic_map) -&gt; keys + (idx), (dynamic_map) -&gt; keys + (idx) + 1, ((dynamic_map) -&gt; size - (idx) - 1) * sizeof(*(dynamic_map) -&gt; keys)); \</span></div>
+<div class="line"><span class="lineno">  220</span><span class="preprocessor">        memmove((dynamic_map) -&gt; values + (idx), (dynamic_map) -&gt; values + (idx) + 1, ((dynamic_map) -&gt; size - (idx) - 1) * sizeof(*(dynamic_map) -&gt; values)); \</span></div>
+<div class="line"><span class="lineno">  221</span><span class="preprocessor">        (dynamic_map) -&gt; size--; \</span></div>
+<div class="line"><span class="lineno">  222</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -609,18 +654,18 @@ This macro does not validate the size of the map or the index given, so make sur
 <dd>
 The 3rd argument should be a signed integer value indicating whether or not the key/value entry was removed successfully. If 'result' is -1, the key was not found, and therefore the entry was not removed. If 'result' is 1, the entry was found and removed. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00265">265</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  265</span><span class="preprocessor">#define dynmaps_remove_result(dynamic_map, key, result) \</span></div>
-<div class="line"><span class="lineno">  266</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">  267</span><span class="preprocessor">        (result) = -1; \</span></div>
-<div class="line"><span class="lineno">  268</span><span class="preprocessor">        int dynmaps_entry_idx = -1; \</span></div>
-<div class="line"><span class="lineno">  269</span><span class="preprocessor">        dynmaps_find_entry(dynamic_map, key, dynmaps_entry_idx); \</span></div>
-<div class="line"><span class="lineno">  270</span><span class="preprocessor">        if(dynmaps_entry_idx != -1) \</span></div>
-<div class="line"><span class="lineno">  271</span><span class="preprocessor">        { \</span></div>
-<div class="line"><span class="lineno">  272</span><span class="preprocessor">            dynmaps_remove_at(dynamic_map, dynmaps_entry_idx); \</span></div>
-<div class="line"><span class="lineno">  273</span><span class="preprocessor">            (result) = 1; \</span></div>
-<div class="line"><span class="lineno">  274</span><span class="preprocessor">        } \</span></div>
-<div class="line"><span class="lineno">  275</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00286">286</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  286</span><span class="preprocessor">#define dynmaps_remove_result(dynamic_map, key, result) \</span></div>
+<div class="line"><span class="lineno">  287</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">  288</span><span class="preprocessor">        (result) = -1; \</span></div>
+<div class="line"><span class="lineno">  289</span><span class="preprocessor">        int dynmaps_entry_idx = -1; \</span></div>
+<div class="line"><span class="lineno">  290</span><span class="preprocessor">        dynmaps_find_entry(dynamic_map, key, dynmaps_entry_idx); \</span></div>
+<div class="line"><span class="lineno">  291</span><span class="preprocessor">        if(dynmaps_entry_idx != -1) \</span></div>
+<div class="line"><span class="lineno">  292</span><span class="preprocessor">        { \</span></div>
+<div class="line"><span class="lineno">  293</span><span class="preprocessor">            dynmaps_remove_at(dynamic_map, dynmaps_entry_idx); \</span></div>
+<div class="line"><span class="lineno">  294</span><span class="preprocessor">            (result) = 1; \</span></div>
+<div class="line"><span class="lineno">  295</span><span class="preprocessor">        } \</span></div>
+<div class="line"><span class="lineno">  296</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -649,12 +694,12 @@ The 3rd argument should be a signed integer value indicating whether or not the 
 </div><!-- fragment --><p>Removes an entry from a map based on a specific string key.</p>
 <dl class="section note"><dt>Note</dt><dd>This macro expects a pointer to the dynamic map. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00318">318</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  318</span><span class="preprocessor">#define dynmaps_remove_strkey(dynamic_map, key) \</span></div>
-<div class="line"><span class="lineno">  319</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">  320</span><span class="preprocessor">        int dynmaps_entry_idx = -1; \</span></div>
-<div class="line"><span class="lineno">  321</span><span class="preprocessor">        dynmaps_remove_strkey_result(dynamic_map, key, dynmaps_entry_idx); \</span></div>
-<div class="line"><span class="lineno">  322</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00339">339</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  339</span><span class="preprocessor">#define dynmaps_remove_strkey(dynamic_map, key) \</span></div>
+<div class="line"><span class="lineno">  340</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">  341</span><span class="preprocessor">        int dynmaps_entry_idx = -1; \</span></div>
+<div class="line"><span class="lineno">  342</span><span class="preprocessor">        dynmaps_remove_strkey_result(dynamic_map, key, dynmaps_entry_idx); \</span></div>
+<div class="line"><span class="lineno">  343</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -696,18 +741,18 @@ The 3rd argument should be a signed integer value indicating whether or not the 
 <dd>
 The 3rd argument should be a signed integer value indicating whether or not the key/value entry was removed successfully. If 'result' is -1, the key was not found, and therefore the entry was not removed. If 'result' is 1, the entry was found and removed. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00301">301</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  301</span><span class="preprocessor">#define dynmaps_remove_strkey_result(dynamic_map, key, result) \</span></div>
-<div class="line"><span class="lineno">  302</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">  303</span><span class="preprocessor">        (result) = -1; \</span></div>
-<div class="line"><span class="lineno">  304</span><span class="preprocessor">        int dynmaps_entry_idx = -1; \</span></div>
-<div class="line"><span class="lineno">  305</span><span class="preprocessor">        dynmaps_find_entry_strkey(dynamic_map, key, dynmaps_entry_idx); \</span></div>
-<div class="line"><span class="lineno">  306</span><span class="preprocessor">        if(dynmaps_entry_idx != -1) \</span></div>
-<div class="line"><span class="lineno">  307</span><span class="preprocessor">        { \</span></div>
-<div class="line"><span class="lineno">  308</span><span class="preprocessor">            dynmaps_remove_at(dynamic_map, dynmaps_entry_idx); \</span></div>
-<div class="line"><span class="lineno">  309</span><span class="preprocessor">            (result) = 1; \</span></div>
-<div class="line"><span class="lineno">  310</span><span class="preprocessor">        } \</span></div>
-<div class="line"><span class="lineno">  311</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00322">322</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  322</span><span class="preprocessor">#define dynmaps_remove_strkey_result(dynamic_map, key, result) \</span></div>
+<div class="line"><span class="lineno">  323</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">  324</span><span class="preprocessor">        (result) = -1; \</span></div>
+<div class="line"><span class="lineno">  325</span><span class="preprocessor">        int dynmaps_entry_idx = -1; \</span></div>
+<div class="line"><span class="lineno">  326</span><span class="preprocessor">        dynmaps_find_entry_strkey(dynamic_map, key, dynmaps_entry_idx); \</span></div>
+<div class="line"><span class="lineno">  327</span><span class="preprocessor">        if(dynmaps_entry_idx != -1) \</span></div>
+<div class="line"><span class="lineno">  328</span><span class="preprocessor">        { \</span></div>
+<div class="line"><span class="lineno">  329</span><span class="preprocessor">            dynmaps_remove_at(dynamic_map, dynmaps_entry_idx); \</span></div>
+<div class="line"><span class="lineno">  330</span><span class="preprocessor">            (result) = 1; \</span></div>
+<div class="line"><span class="lineno">  331</span><span class="preprocessor">        } \</span></div>
+<div class="line"><span class="lineno">  332</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -754,23 +799,23 @@ The 3rd argument should be a signed integer value indicating whether or not the 
 <dd>
 The dynamic map will auto-expand if necessary. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00141">141</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  141</span><span class="preprocessor">#define dynmaps_set(dynamic_map, key, value) \</span></div>
-<div class="line"><span class="lineno">  142</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">  143</span><span class="preprocessor">        dynmaps_expand(dynamic_map); \</span></div>
-<div class="line"><span class="lineno">  144</span><span class="preprocessor">        int dynmaps_k_idx = -1; \</span></div>
-<div class="line"><span class="lineno">  145</span><span class="preprocessor">        dynmaps_find_entry(dynamic_map, key, dynmaps_k_idx); \</span></div>
-<div class="line"><span class="lineno">  146</span><span class="preprocessor">        if(dynmaps_k_idx != -1) \</span></div>
-<div class="line"><span class="lineno">  147</span><span class="preprocessor">        { \</span></div>
-<div class="line"><span class="lineno">  148</span><span class="preprocessor">            (dynamic_map) -&gt; values[dynmaps_k_idx] = (value); \</span></div>
-<div class="line"><span class="lineno">  149</span><span class="preprocessor">        } \</span></div>
-<div class="line"><span class="lineno">  150</span><span class="preprocessor">        else \</span></div>
-<div class="line"><span class="lineno">  151</span><span class="preprocessor">        { \</span></div>
-<div class="line"><span class="lineno">  152</span><span class="preprocessor">            (dynamic_map) -&gt; keys[(dynamic_map) -&gt; size] = (key); \</span></div>
-<div class="line"><span class="lineno">  153</span><span class="preprocessor">            (dynamic_map) -&gt; values[(dynamic_map) -&gt; size] = (value); \</span></div>
-<div class="line"><span class="lineno">  154</span><span class="preprocessor">            (dynamic_map) -&gt; size++; \</span></div>
-<div class="line"><span class="lineno">  155</span><span class="preprocessor">        } \</span></div>
-<div class="line"><span class="lineno">  156</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00162">162</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  162</span><span class="preprocessor">#define dynmaps_set(dynamic_map, key, value) \</span></div>
+<div class="line"><span class="lineno">  163</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">  164</span><span class="preprocessor">        dynmaps_expand(dynamic_map); \</span></div>
+<div class="line"><span class="lineno">  165</span><span class="preprocessor">        int dynmaps_k_idx = -1; \</span></div>
+<div class="line"><span class="lineno">  166</span><span class="preprocessor">        dynmaps_find_entry(dynamic_map, key, dynmaps_k_idx); \</span></div>
+<div class="line"><span class="lineno">  167</span><span class="preprocessor">        if(dynmaps_k_idx != -1) \</span></div>
+<div class="line"><span class="lineno">  168</span><span class="preprocessor">        { \</span></div>
+<div class="line"><span class="lineno">  169</span><span class="preprocessor">            (dynamic_map) -&gt; values[dynmaps_k_idx] = (value); \</span></div>
+<div class="line"><span class="lineno">  170</span><span class="preprocessor">        } \</span></div>
+<div class="line"><span class="lineno">  171</span><span class="preprocessor">        else \</span></div>
+<div class="line"><span class="lineno">  172</span><span class="preprocessor">        { \</span></div>
+<div class="line"><span class="lineno">  173</span><span class="preprocessor">            (dynamic_map) -&gt; keys[(dynamic_map) -&gt; size] = (key); \</span></div>
+<div class="line"><span class="lineno">  174</span><span class="preprocessor">            (dynamic_map) -&gt; values[(dynamic_map) -&gt; size] = (value); \</span></div>
+<div class="line"><span class="lineno">  175</span><span class="preprocessor">            (dynamic_map) -&gt; size++; \</span></div>
+<div class="line"><span class="lineno">  176</span><span class="preprocessor">        } \</span></div>
+<div class="line"><span class="lineno">  177</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -807,7 +852,7 @@ The dynamic map will auto-expand if necessary. </dd></dl>
 <div class="line">        } \</div>
 <div class="line">        <span class="keywordflow">else</span> \</div>
 <div class="line">        { \</div>
-<div class="line">            (dynamic_map) -&gt; keys[(dynamic_map) -&gt; size] = (key); \</div>
+<div class="line">            (dynamic_map) -&gt; keys[(dynamic_map) -&gt; size] = strdup((key)); \</div>
 <div class="line">            (dynamic_map) -&gt; values[(dynamic_map) -&gt; size] = (value); \</div>
 <div class="line">            (dynamic_map) -&gt; size++; \</div>
 <div class="line">        } \</div>
@@ -817,23 +862,23 @@ The dynamic map will auto-expand if necessary. </dd></dl>
 <dd>
 The dynamic map will auto-expand if necessary. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00169">169</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  169</span><span class="preprocessor">#define dynmaps_set_strkey(dynamic_map, key, value) \</span></div>
-<div class="line"><span class="lineno">  170</span><span class="preprocessor">    do { \</span></div>
-<div class="line"><span class="lineno">  171</span><span class="preprocessor">        dynmaps_expand(dynamic_map); \</span></div>
-<div class="line"><span class="lineno">  172</span><span class="preprocessor">        int dynmaps_k_idx = -1; \</span></div>
-<div class="line"><span class="lineno">  173</span><span class="preprocessor">        dynmaps_find_entry_strkey(dynamic_map, key, dynmaps_k_idx); \</span></div>
-<div class="line"><span class="lineno">  174</span><span class="preprocessor">        if(dynmaps_k_idx != -1) \</span></div>
-<div class="line"><span class="lineno">  175</span><span class="preprocessor">        { \</span></div>
-<div class="line"><span class="lineno">  176</span><span class="preprocessor">            (dynamic_map) -&gt; values[dynmaps_k_idx] = (value); \</span></div>
-<div class="line"><span class="lineno">  177</span><span class="preprocessor">        } \</span></div>
-<div class="line"><span class="lineno">  178</span><span class="preprocessor">        else \</span></div>
-<div class="line"><span class="lineno">  179</span><span class="preprocessor">        { \</span></div>
-<div class="line"><span class="lineno">  180</span><span class="preprocessor">            (dynamic_map) -&gt; keys[(dynamic_map) -&gt; size] = (key); \</span></div>
-<div class="line"><span class="lineno">  181</span><span class="preprocessor">            (dynamic_map) -&gt; values[(dynamic_map) -&gt; size] = (value); \</span></div>
-<div class="line"><span class="lineno">  182</span><span class="preprocessor">            (dynamic_map) -&gt; size++; \</span></div>
-<div class="line"><span class="lineno">  183</span><span class="preprocessor">        } \</span></div>
-<div class="line"><span class="lineno">  184</span><span class="preprocessor">    } while(0)</span></div>
+<p class="definition">Definition at line <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html#l00190">190</a> of file <a class="el" href="../../d8/d52/dynamic__map__spellbook_8h_source.html">dynamic_map_spellbook.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  190</span><span class="preprocessor">#define dynmaps_set_strkey(dynamic_map, key, value) \</span></div>
+<div class="line"><span class="lineno">  191</span><span class="preprocessor">    do { \</span></div>
+<div class="line"><span class="lineno">  192</span><span class="preprocessor">        dynmaps_expand(dynamic_map); \</span></div>
+<div class="line"><span class="lineno">  193</span><span class="preprocessor">        int dynmaps_k_idx = -1; \</span></div>
+<div class="line"><span class="lineno">  194</span><span class="preprocessor">        dynmaps_find_entry_strkey(dynamic_map, key, dynmaps_k_idx); \</span></div>
+<div class="line"><span class="lineno">  195</span><span class="preprocessor">        if(dynmaps_k_idx != -1) \</span></div>
+<div class="line"><span class="lineno">  196</span><span class="preprocessor">        { \</span></div>
+<div class="line"><span class="lineno">  197</span><span class="preprocessor">            (dynamic_map) -&gt; values[dynmaps_k_idx] = (value); \</span></div>
+<div class="line"><span class="lineno">  198</span><span class="preprocessor">        } \</span></div>
+<div class="line"><span class="lineno">  199</span><span class="preprocessor">        else \</span></div>
+<div class="line"><span class="lineno">  200</span><span class="preprocessor">        { \</span></div>
+<div class="line"><span class="lineno">  201</span><span class="preprocessor">            (dynamic_map) -&gt; keys[(dynamic_map) -&gt; size] = strdup((key)); \</span></div>
+<div class="line"><span class="lineno">  202</span><span class="preprocessor">            (dynamic_map) -&gt; values[(dynamic_map) -&gt; size] = (value); \</span></div>
+<div class="line"><span class="lineno">  203</span><span class="preprocessor">            (dynamic_map) -&gt; size++; \</span></div>
+<div class="line"><span class="lineno">  204</span><span class="preprocessor">        } \</span></div>
+<div class="line"><span class="lineno">  205</span><span class="preprocessor">    } while(0)</span></div>
 </div><!-- fragment -->
 </div>
 </div>

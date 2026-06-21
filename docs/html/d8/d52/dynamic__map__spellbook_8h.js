@@ -5,6 +5,7 @@ var dynamic__map__spellbook_8h =
     [ "dynmaps_find_entry", "d8/d52/dynamic__map__spellbook_8h.html#ade2aebb2a281002b2b8959c81f6387a4", null ],
     [ "dynmaps_find_entry_strkey", "d8/d52/dynamic__map__spellbook_8h.html#a90ae0fa307d1713314a4cbcfc0c019dd", null ],
     [ "dynmaps_free", "d8/d52/dynamic__map__spellbook_8h.html#a9040b9f6aebaa24f715442cb42839b88", null ],
+    [ "dynmaps_free_strkey", "d8/d52/dynamic__map__spellbook_8h.html#a7b7042e9995eba9978b96c967ab5a108", null ],
     [ "dynmaps_get", "d8/d52/dynamic__map__spellbook_8h.html#aa2b915c5d44f95738b497fe05fd86bcb", null ],
     [ "dynmaps_get_strkey", "d8/d52/dynamic__map__spellbook_8h.html#a7f03364c477238fdc5cc5b7e575cc751", null ],
     [ "dynmaps_init", "d8/d52/dynamic__map__spellbook_8h.html#a8e509a128daed5ab883a415b4c8b086f", null ],
