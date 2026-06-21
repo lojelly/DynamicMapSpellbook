@@ -46,6 +46,27 @@
 	} while(0)
 
 /**
+  Frees a dynamic map's memory.
+
+  @note This macro is targeted towards dynamic maps
+  that use string keys. This is because string-keyed
+  dynamic maps allocate memory to duplicate strings.
+
+  @note This macro expects a pointer to the dynamic map.
+*/
+#define dynmaps_free_strkey(dynamic_map) \
+	do { \
+		for(size_t i = 0; i < (dynamic_map) -> size; ++i) \
+			free((dynamic_map) -> keys[i]); \
+		(dynamic_map) -> size = 0; \
+		(dynamic_map) -> capacity = 10; \
+		free((dynamic_map) -> keys); \
+		free((dynamic_map) -> values); \
+		(dynamic_map) -> keys = NULL; \
+		(dynamic_map) -> values = NULL; \
+	} while(0)
+
+/**
   Obtains a value from a dynamic map
   based on a key. If the key is
   not found, the resulting value is NULL instead.
@@ -177,7 +198,7 @@
 		} \
 		else \
 		{ \
-			(dynamic_map) -> keys[(dynamic_map) -> size] = (key); \
+			(dynamic_map) -> keys[(dynamic_map) -> size] = strdup((key)); \
 			(dynamic_map) -> values[(dynamic_map) -> size] = (value); \
 			(dynamic_map) -> size++; \
 		} \

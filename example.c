@@ -3,8 +3,8 @@
 
 typedef struct Map
 {
-	size_t *keys;
-	char **values;
+	char **keys;
+	size_t *values;
 	size_t size;
 	size_t capacity;
 } Map;
@@ -15,18 +15,15 @@ int main(void)
 
 	dynmaps_init(&map);
 
-	dynmaps_set(&map, 0, "world1");
-	dynmaps_set(&map, 1, "world2");
-	dynmaps_set(&map, 44, "main world");
-	dynmaps_set(&map, 271, "player271");
-	dynmaps_set(&map, 512, "random value");
+	dynmaps_set_strkey(&map, "world1", 0);
+	dynmaps_set_strkey(&map, "world2", 1);
 
 	for(size_t i = 0; i < map.size; ++i)
 	{
-		printf("%zu = '%s'\n", map.keys[i], map.values[i]);
+		printf("'%s' = %zu\n", map.keys[i], map.values[i]);
 	}
 
-	dynmaps_free(&map);
+	dynmaps_free_strkey(&map);
 
 	return 0;
 }
