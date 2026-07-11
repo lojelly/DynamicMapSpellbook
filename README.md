@@ -18,28 +18,10 @@ cmake -S . -B build
 cmake --build build
 ```
 
-## Optionally installing
+### Using the library (in-directory, just place dynamic_map_spellbook.h inside your /include directory)
 
 ```
-cmake --install build --prefix ./install
-```
-
-> [!NOTE]
-> Note that ./install is a placeholder install location for the library. Omitting the install location results in the library being installed in the operating system's default path.
-
-### Using the library (installed package)
-
-```
-list(APPEND CMAKE_PREFIX_PATH "/path/to/dynamic_map_spellbook/install")
-find_package(DynamicMapSpellbook REQUIRED)
-target_link_libraries(app PRIVATE DynamicMapSpellbook::dynamic_map_spellbook)
-```
-
-### Using the library (subdirectory)
-
-```
-add_subdirectory(DynamicMapSpellbook)
-target_link_libraries(app PRIVATE DynamicMapSpellbook::dynamic_map_spellbook)
+target_include_directories(app PRIVATE "path/to/include")
 ```
 
 For an example of using the library, refer to `example.c`
