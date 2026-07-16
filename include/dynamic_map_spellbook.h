@@ -133,6 +133,9 @@
   expand the map is necessary.
 
   @note This macro expects a pointer to the dynamic map.
+
+  @important If the reallocation fails, the 'keys' and 'values'
+  pointers in the given map will be equal to NULL.
 */
 #define dynmaps_expand(dynamic_map) \
 	do { \
@@ -141,8 +144,19 @@
 			if((dynamic_map) -> capacity * 2 <= SIZE_MAX) \
 			{ \
 				(dynamic_map) -> capacity *= 2; \
-				(dynamic_map) -> keys = realloc((dynamic_map) -> keys, (dynamic_map) -> capacity * sizeof(*(dynamic_map) -> keys)); \
-				(dynamic_map) -> values = realloc((dynamic_map) -> values, (dynamic_map) -> capacity * sizeof(*(dynamic_map) -> values)); \
+				__typeof__((dynamic_map) -> keys) ktmp = realloc((dynamic_map) -> keys, (dynamic_map) -> capacity * sizeof(*(dynamic_map) -> keys)); \
+				__typeof__((dynamic_map) -> values) vtmp = realloc((dynamic_map) -> values, (dynamic_map) -> capacity * sizeof(*(dynamic_map) -> values)); \
+				if(ktmp && vtmp) \
+				{ \
+					(dynamic_map) -> keys = ktmp; \
+					(dynamic_map) -> values = vtmp; \
+				} \
+				else \
+				{ \
+					dynmaps_free(dynamic_map); \
+					(dynamic_map) -> keys = NULL; \
+					(dynamic_map) -> values = NULL \
+				} \
 			} \
 		} \
 	} while(0)
@@ -162,6 +176,8 @@
 #define dynmaps_set(dynamic_map, key, value) \
 	do { \
 		dynmaps_expand(dynamic_map); \
+		if(!(dynamic_map) -> keys || !(dynamic_map) -> values) \
+			break; \
 		int dynmaps_k_idx = -1; \
 		dynmaps_find_entry(dynamic_map, key, dynmaps_k_idx); \
 		if(dynmaps_k_idx != -1) \
@@ -190,6 +206,8 @@
 #define dynmaps_set_strkey(dynamic_map, key, value) \
 	do { \
 		dynmaps_expand(dynamic_map); \
+		if(!(dynamic_map) -> keys || !(dynamic_map) -> values) \
+			break; \
 		int dynmaps_k_idx = -1; \
 		dynmaps_find_entry_strkey(dynamic_map, key, dynmaps_k_idx); \
 		if(dynmaps_k_idx != -1) \
