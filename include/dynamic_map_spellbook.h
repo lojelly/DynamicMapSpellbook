@@ -155,7 +155,7 @@
 				{ \
 					dynmaps_free(dynamic_map); \
 					(dynamic_map) -> keys = NULL; \
-					(dynamic_map) -> values = NULL \
+					(dynamic_map) -> values = NULL; \
 				} \
 			} \
 		} \
