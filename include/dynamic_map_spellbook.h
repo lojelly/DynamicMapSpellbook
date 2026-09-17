@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
 #include <string.h>
 
 /**
@@ -14,6 +16,9 @@
   - A pointer representing the array of values, called 'values.'
   - A size_t called 'size.' This is the map's current size.
   - A size_t called 'capacity.' This is the max size of the map.
+  - A bool called 'alloc_failure.' This will indicate whether
+  or not the map failed to allocate any memory. It remains true
+  until the map is freed or reinitialized.
 
   When a dynamic map is initialized, its size is 0, its capacity
   starts out at 10, and its keys and values are automatically
@@ -24,25 +29,46 @@
 */
 #define dynmaps_init(dynamic_map) \
 	do { \
-		(dynamic_map) -> size = 0; \
-		(dynamic_map) -> capacity = 10; \
-		(dynamic_map) -> keys = calloc((dynamic_map) -> capacity * sizeof(*(dynamic_map) -> keys), sizeof(*(dynamic_map) -> keys)); \
-		(dynamic_map) -> values = calloc((dynamic_map) -> capacity * sizeof(*(dynamic_map) -> values), sizeof(*(dynamic_map) -> values)); \
+		(dynamic_map)->size = 0; \
+		(dynamic_map)->capacity = 10; \
+		(dynamic_map)->keys = calloc((dynamic_map)->capacity * sizeof(*(dynamic_map)->keys), sizeof(*(dynamic_map)->keys)); \
+		(dynamic_map)->values = calloc((dynamic_map)->capacity * sizeof(*(dynamic_map)->values), sizeof(*(dynamic_map)->values)); \
+		if(!(dynamic_map)->keys || !(dynamic_map)->values) \
+		{ \
+			if((dynamic_map)->keys) \
+				free((dynamic_map)->keys); \
+			if((dynamic_map)->values) \
+				free((dynamic_map)->values); \
+			(dynamic_map)->keys = NULL; \
+			(dynamic_map)->values = NULL; \
+			(dynamic_map)->capacity = 0; \
+			(dynamic_map)->alloc_failure = true; \
+		} \
+		else \
+			(dynamic_map)->alloc_failure = false; \
 	} while(0)
 
 /**
   Frees a dynamic map's memory.
 
   @note This macro expects a pointer to the dynamic map.
+
+  If the map uses string keys, use dynmaps_free_strkey(...) instead.
+  If the map uses string keys and values, use
+  dynmaps_free_strkeyval(...) instead.
+
+  @see dynmaps_free_strkey(map)
+  @see dynmaps_free_strkeyval(map)
 */
 #define dynmaps_free(dynamic_map) \
 	do { \
-		(dynamic_map) -> size = 0; \
-		(dynamic_map) -> capacity = 10; \
-		free((dynamic_map) -> keys); \
-		free((dynamic_map) -> values); \
-		(dynamic_map) -> keys = NULL; \
-		(dynamic_map) -> values = NULL; \
+		(dynamic_map)->size = 0; \
+		(dynamic_map)->capacity = 0; \
+		free((dynamic_map)->keys); \
+		free((dynamic_map)->values); \
+		(dynamic_map)->keys = NULL; \
+		(dynamic_map)->values = NULL; \
+		(dynamic_map)->alloc_failure = false; \
 	} while(0)
 
 /**
@@ -53,17 +79,49 @@
   dynamic maps allocate memory to duplicate strings.
 
   @note This macro expects a pointer to the dynamic map.
+
+  @see dynmaps_free(map)
+  @see dynmaps_free_strkeyval(map)
 */
 #define dynmaps_free_strkey(dynamic_map) \
 	do { \
-		for(size_t i = 0; i < (dynamic_map) -> size; ++i) \
-			free((dynamic_map) -> keys[i]); \
-		(dynamic_map) -> size = 0; \
-		(dynamic_map) -> capacity = 10; \
-		free((dynamic_map) -> keys); \
-		free((dynamic_map) -> values); \
-		(dynamic_map) -> keys = NULL; \
-		(dynamic_map) -> values = NULL; \
+		for(size_t i = 0; i < (dynamic_map)->size; ++i) \
+			free((dynamic_map)->keys[i]); \
+		(dynamic_map)->size = 0; \
+		(dynamic_map)->capacity = 0; \
+		free((dynamic_map)->keys); \
+		free((dynamic_map)->values); \
+		(dynamic_map)->keys = NULL; \
+		(dynamic_map)->values = NULL; \
+		(dynamic_map)->alloc_failure = false; \
+	} while(0)
+
+/**
+  Frees a dynamic map's memory.
+
+  @note This macro is targeted towards dynamic maps
+  that use string and string values. This is because
+  these maps allocate memory to duplicate the strings.
+
+  @note This macro expects a pointer to the dynamic map.
+
+  @see dynmaps_free(map)
+  @see dynmaps_free_strkey(map)
+*/
+#define dynmaps_free_strkeyval(dynamic_map) \
+	do { \
+		for(size_t i = 0; i < (dynamic_map)->size; ++i) \
+		{ \
+			free((dynamic_map)->keys[i]); \
+			free((dynamic_map)->values[i]); \
+		} \
+		(dynamic_map)->size = 0; \
+		(dynamic_map)->capacity = 0; \
+		free((dynamic_map)->keys); \
+		free((dynamic_map)->values); \
+		(dynamic_map)->keys = NULL; \
+		(dynamic_map)->values = NULL; \
+		(dynamic_map)->alloc_failure = false; \
 	} while(0)
 
 /**
@@ -87,11 +145,11 @@
 #define dynmaps_get(dynamic_map, key, value) \
 	do { \
 		(value) = NULL; \
-		for(size_t i = 0; i < (dynamic_map) -> size; ++i) \
+		for(size_t i = 0; i < (dynamic_map)->size; ++i) \
 		{ \
-			if((dynamic_map) -> keys[i] == (key)) \
+			if((dynamic_map)->keys[i] == (key)) \
 			{ \
-				(value) = &(dynamic_map) -> values[i]; \
+				(value) = &(dynamic_map)->values[i]; \
 				break; \
 			} \
 		} \
@@ -117,11 +175,11 @@
 #define dynmaps_get_strkey(dynamic_map, key, value) \
 	do { \
 		(value) = NULL; \
-		for(size_t i = 0; i < (dynamic_map) -> size; ++i) \
+		for(size_t i = 0; i < (dynamic_map)->size; ++i) \
 		{ \
-			if(strcmp((dynamic_map) -> keys[i], (key)) == 0) \
+			if(strcmp((dynamic_map)->keys[i], (key)) == 0) \
 			{ \
-				(value) = &(dynamic_map) -> values[i]; \
+				(value) = &(dynamic_map)->values[i]; \
 				break; \
 			} \
 		} \
@@ -134,30 +192,48 @@
 
   @note This macro expects a pointer to the dynamic map.
 
-  @important If the reallocation fails, the 'keys' and 'values'
-  pointers in the given map will be equal to NULL.
+  @important If the reallocation fails, the 'alloc_failure'
+  field in the map will be set to true. If you are using
+  a dynmaps_set...(map) macro and the reallocation fails,
+  the map's memory is not automatically freed, but the
+  macro is automatically broken out of.
 */
 #define dynmaps_expand(dynamic_map) \
 	do { \
-		if((dynamic_map) -> size >= (dynamic_map) -> capacity) \
+		if(!(dynamic_map)->alloc_failure && (dynamic_map)->size >= (dynamic_map)->capacity) \
 		{ \
-			if((dynamic_map) -> capacity * 2 <= SIZE_MAX) \
+			if((dynamic_map)->capacity <= SIZE_MAX / 2) \
 			{ \
-				(dynamic_map) -> capacity *= 2; \
-				__typeof__((dynamic_map) -> keys) ktmp = realloc((dynamic_map) -> keys, (dynamic_map) -> capacity * sizeof(*(dynamic_map) -> keys)); \
-				__typeof__((dynamic_map) -> values) vtmp = realloc((dynamic_map) -> values, (dynamic_map) -> capacity * sizeof(*(dynamic_map) -> values)); \
+				size_t new_cap = (dynamic_map)->capacity ?  (dynamic_map)->capacity * 2 : 10; \
+				if(new_cap > SIZE_MAX / sizeof(*(dynamic_map)->keys)) \
+				{ \
+					(dynamic_map)->alloc_failure = true; \
+					break; \
+				} \
+				if(new_cap > SIZE_MAX / sizeof(*(dynamic_map)->values)) \
+				{ \
+					(dynamic_map)->alloc_failure = true; \
+					break; \
+				} \
+				__typeof__((dynamic_map)->keys) ktmp = realloc((dynamic_map)->keys, new_cap * sizeof(*(dynamic_map)->keys)); \
+				__typeof__((dynamic_map)->values) vtmp = realloc((dynamic_map)->values, new_cap * sizeof(*(dynamic_map)->values)); \
 				if(ktmp && vtmp) \
 				{ \
-					(dynamic_map) -> keys = ktmp; \
-					(dynamic_map) -> values = vtmp; \
+					(dynamic_map)->keys = ktmp; \
+					(dynamic_map)->values = vtmp; \
+					(dynamic_map)->capacity = new_cap; \
 				} \
 				else \
 				{ \
-					dynmaps_free(dynamic_map); \
-					(dynamic_map) -> keys = NULL; \
-					(dynamic_map) -> values = NULL; \
+					if(ktmp) \
+						free(ktmp); \
+					if(vtmp) \
+						free(vtmp); \
+					(dynamic_map)->alloc_failure = true; \
 				} \
 			} \
+			else \
+				(dynamic_map)->alloc_failure = true; \
 		} \
 	} while(0)
 
@@ -167,28 +243,33 @@
   is set to the value given. If the key does not
   exist in the map, the key and value
   are appended to it. If the map uses string keys,
-  use dynmaps_set_strkey(...) instead.
+  use dynmaps_set_strkey(...) instead. If the map
+  uses string keys and string values, use
+  dynmaps_set_strkeyval(...) instead.
 
   @note This macro expects a pointer to the dynamic map.
 
   @note The dynamic map will auto-expand if necessary.
+
+  @see dynmaps_set_strkey(map, key, val)
+  @see dynmaps_set_strkeyval(map, key, val)
 */
 #define dynmaps_set(dynamic_map, key, value) \
 	do { \
-		dynmaps_expand(dynamic_map); \
-		if(!(dynamic_map) -> keys || !(dynamic_map) -> values) \
-			break; \
 		int dynmaps_k_idx = -1; \
 		dynmaps_find_entry(dynamic_map, key, dynmaps_k_idx); \
 		if(dynmaps_k_idx != -1) \
 		{ \
-			(dynamic_map) -> values[dynmaps_k_idx] = (value); \
+			(dynamic_map)->values[dynmaps_k_idx] = (value); \
 		} \
 		else \
 		{ \
-			(dynamic_map) -> keys[(dynamic_map) -> size] = (key); \
-			(dynamic_map) -> values[(dynamic_map) -> size] = (value); \
-			(dynamic_map) -> size++; \
+			dynmaps_expand(dynamic_map); \
+			if((dynamic_map)->alloc_failure) \
+				break; \
+			(dynamic_map)->keys[(dynamic_map)->size] = (key); \
+			(dynamic_map)->values[(dynamic_map)->size] = (value); \
+			(dynamic_map)->size++; \
 		} \
 	} while(0)
 
@@ -202,23 +283,82 @@
   @note This macro expects a pointer to the dynamic map.
 
   @note The dynamic map will auto-expand if necessary.
+
+  @see dynmaps_set(map, key, val)
+  @see dynmaps_set_strkeyval(map, key, val)
 */
 #define dynmaps_set_strkey(dynamic_map, key, value) \
 	do { \
-		dynmaps_expand(dynamic_map); \
-		if(!(dynamic_map) -> keys || !(dynamic_map) -> values) \
-			break; \
+		int dynmaps_k_idx = -1; \
+		dynmaps_find_entry_strkey(dynamic_map, key, dynmaps_k_idx); \
+		if(dynmaps_k_idx != -1) \
+			(dynamic_map)->values[dynmaps_k_idx] = ((value)); \
+		else \
+		{ \
+			dynmaps_expand(dynamic_map); \
+			if((dynamic_map)->alloc_failure) \
+				break; \
+			char *k = strdup((key)); \
+			if(!k) \
+			{ \
+				(dynamic_map)->alloc_failure = true; \
+				break; \
+			} \
+			(dynamic_map)->keys[(dynamic_map)->size] = k; \
+			(dynamic_map)->values[(dynamic_map)->size] = ((value)); \
+			(dynamic_map)->size++; \
+		} \
+	} while(0)
+
+/**
+  Sets a key and value in the given dynamic map.
+  If the key already exists in the map, its value
+  is set to the value given. If the key does not exist
+  in the map, the key and value are appended to it.
+
+  @note This macro expects a pointer to the dynamic map.
+
+  @note The dynamic map will auto-expand if necessary.
+
+  @see dynmaps_set(map, key, val)
+  @see dynmaps_set_strkey(map, key, val)
+*/
+#define dynmaps_set_strkeyval(dynamic_map, key, value) \
+	do { \
 		int dynmaps_k_idx = -1; \
 		dynmaps_find_entry_strkey(dynamic_map, key, dynmaps_k_idx); \
 		if(dynmaps_k_idx != -1) \
 		{ \
-			(dynamic_map) -> values[dynmaps_k_idx] = (value); \
+			char *v = strdup((value)); \
+			if(!v) \
+			{ \
+				(dynamic_map)->alloc_failure = true; \
+				break; \
+			} \
+			free((dynamic_map)->values[dynmaps_k_idx]); \
+			(dynamic_map)->values[dynmaps_k_idx] = v; \
 		} \
 		else \
 		{ \
-			(dynamic_map) -> keys[(dynamic_map) -> size] = strdup((key)); \
-			(dynamic_map) -> values[(dynamic_map) -> size] = (value); \
-			(dynamic_map) -> size++; \
+			dynmaps_expand(dynamic_map); \
+			if((dynamic_map)->alloc_failure) \
+				break; \
+			char *k = strdup((key)); \
+			if(!k) \
+			{ \
+				(dynamic_map)->alloc_failure = true; \
+				break; \
+			} \
+			char *v = strdup((value)); \
+			if(!v) \
+			{ \
+				(dynamic_map)->alloc_failure = true; \
+				free(k); \
+				break; \
+			} \
+			(dynamic_map)->keys[(dynamic_map)->size] = k; \
+			(dynamic_map)->values[(dynamic_map)->size] = v; \
+			(dynamic_map)->size++; \
 		} \
 	} while(0)
 
@@ -234,9 +374,9 @@
 */
 #define dynmaps_remove_at(dynamic_map, idx) \
 	do { \
-		memmove((dynamic_map) -> keys + (idx), (dynamic_map) -> keys + (idx) + 1, ((dynamic_map) -> size - (idx) - 1) * sizeof(*(dynamic_map) -> keys)); \
-		memmove((dynamic_map) -> values + (idx), (dynamic_map) -> values + (idx) + 1, ((dynamic_map) -> size - (idx) - 1) * sizeof(*(dynamic_map) -> values)); \
-		(dynamic_map) -> size--; \
+		memmove((dynamic_map)->keys + (idx), (dynamic_map)->keys + (idx) + 1, ((dynamic_map)->size - (idx) - 1) * sizeof(*(dynamic_map)->keys)); \
+		memmove((dynamic_map)->values + (idx), (dynamic_map)->values + (idx) + 1, ((dynamic_map)->size - (idx) - 1) * sizeof(*(dynamic_map)->values)); \
+		(dynamic_map)->size--; \
 	} while(0)
 
 /**
@@ -255,9 +395,9 @@
 #define dynmaps_find_entry(dynamic_map, key, result) \
 	do { \
 		(result) = -1; \
-		for(size_t i = 0; i < (dynamic_map) -> size; ++i) \
+		for(size_t i = 0; i < (dynamic_map)->size; ++i) \
 		{ \
-			if((dynamic_map) -> keys[i] == (key)) \
+			if((dynamic_map)->keys[i] == (key)) \
 			{ \
 				(result) = i; \
 				break; \
@@ -278,9 +418,9 @@
 #define dynmaps_find_entry_strkey(dynamic_map, key, result) \
 	do { \
 		(result) = -1; \
-		for(size_t i = 0; i < (dynamic_map) -> size; ++i) \
+		for(size_t i = 0; i < (dynamic_map)->size; ++i) \
 		{ \
-			if(strcmp((dynamic_map) -> keys[i], (key)) == 0)\
+			if(strcmp((dynamic_map)->keys[i], (key)) == 0)\
 			{ \
 				(result) = i; \
 				break; \
@@ -368,10 +508,10 @@
 */
 #define dynmaps_clear(dynamic_map) \
 	do { \
-		for(size_t i = 0; i < (dynamic_map) -> size; ++i) \
+		for(size_t i = 0; i < (dynamic_map)->size; ++i) \
 		{ \
-			(dynamic_map) -> keys[i] = 0; \
-			(dynamic_map) -> values[i] = 0; \
+			(dynamic_map)->keys[i] = 0; \
+			(dynamic_map)->values[i] = 0; \
 		} \
-		(dynamic_map) -> size = 0; \
+		(dynamic_map)->size = 0; \
 	} while(0)
