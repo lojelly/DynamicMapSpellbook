@@ -31,8 +31,8 @@
 	do { \
 		(dynamic_map)->size = 0; \
 		(dynamic_map)->capacity = 10; \
-		(dynamic_map)->keys = calloc((dynamic_map)->capacity * sizeof(*(dynamic_map)->keys), sizeof(*(dynamic_map)->keys)); \
-		(dynamic_map)->values = calloc((dynamic_map)->capacity * sizeof(*(dynamic_map)->values), sizeof(*(dynamic_map)->values)); \
+		(dynamic_map)->keys = calloc((dynamic_map)->capacity, sizeof(*(dynamic_map)->keys)); \
+		(dynamic_map)->values = calloc((dynamic_map)->capacity, sizeof(*(dynamic_map)->values)); \
 		if(!(dynamic_map)->keys || !(dynamic_map)->values) \
 		{ \
 			if((dynamic_map)->keys) \
